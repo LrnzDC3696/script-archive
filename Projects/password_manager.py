@@ -5,7 +5,7 @@ python community discord server (https://discord.gg/python) and
 tortoise community server (https://discord.gg/7jQzu7BN3H) who helped me ssolve some problems
 '''
 
-def start():
+def start(some_dict):
     while True:
         print('\nWhat do you want to do now?')
         print('1 for adding\n2 for changing\n3 for checking\n4 for deleting\nq for quiting')
@@ -14,7 +14,7 @@ def start():
             choice = input('Your choice: ').lower()
         if choice == 'q':
             break
-        redirect.get(choice)(my_info)
+        redirect.get(choice)(some_dict)
 
 def adding(some_dict):
     print('Welcome you are currently adding a new website and password value\n')
@@ -26,7 +26,6 @@ def adding(some_dict):
     site_password = input('Please enter the new website password: ')
     some_dict.update({site_name:site_password})
     print('The new site and password has been added have fun!')
-    return some_dict
     
 def changing(some_dict):
     print('Welcome you are currently changing a new website and password value\n')
@@ -38,7 +37,6 @@ def changing(some_dict):
     site_password = input('Please enter the new website password: ')
     some_dict.update({site_name:site_password})
     print('You have updated your password!')
-    return some_dict
     
 def checking(some_dict):
     print('\nWelcome you are currently checking the password of the website values\n')
@@ -102,7 +100,7 @@ if __name__ == '__main__':
         
         if temp_username == owner['username'] and temp_password == owner['password']:
             print('You have logged in')
-            start()
+            start(my_info)
         else:
             print('did not work')
             print('try again\n')
