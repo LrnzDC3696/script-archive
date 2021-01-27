@@ -1,14 +1,19 @@
 {
-  "test_variable": [
+  "monkey": [
     {
-      "test_key_1": "test_value_1",
-      "test_key_2": "test_vaoue_2",
-      "test_key_3": "test_value_3"
+      "age": 25,
+      "has_banana": true,
+      "name": "John"
     },
     {
-      "test_key_1": "test_value_4",
-      "test_key_2": "test_vaoue_5",
-      "test_key_3": "test_value_6"
+      "age": 12,
+      "has_banana": true,
+      "name": "Austin"
+    },
+    {
+      "age": 16,
+      "has_banana": false,
+      "name": "Kiara"
     }
   ]
 }
