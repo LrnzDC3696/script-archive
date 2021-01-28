@@ -79,7 +79,7 @@ for small_brain in range(0, len(monkey)):
         temp_dict[needs[-1][number]] = listed
     data[needs[0]].append(temp_dict)
 print(data)
-
+print(type(data))
 with open('test_json.json', 'w') as f:
     json.dump(data, f, indent=2, sort_keys=True)
 """writing the file so the new things overwrites the old ones"""
