@@ -11,80 +11,22 @@ APPLIED:
     json files
     EAFP (Easier to Ask Forgiveness than Permission)
 '''
-import json
-import os
-import hashlib
-
-from cryptography.fernet import Fernet
 from getpass import getpass
-from time import sleep
-
-
-def printify(words=''):
-    """Print but better"""
-    for letter in words:
-        print(letter, end='', flush=True)
-        sleep(0.01)
-    print()
-
-def clear(last_words='', time=0, stop=True):
-    """clears the console"""
-    printify(last_words)
-    if stop:
-        input()
-    sleep(time)
-    os.system('clear')
-
-
-def read_file(database):
-    """Reads the file then returns it"""
-    with open(database) as file:
-        info = json.load(file)
-        return info
-    
-def write_file(database, written):
-    """Edits the file then saves it"""
-    with open(database, 'w') as file:
-        json.dump(written, file, indent=2, sort_keys=True)
-
-
-def hashed(unhashed):
-    """hashes the data and returns it"""
-    return hashlib.sha256(str.encode(unhashed)).hexdigest()
-
-def get_key(filename):
-    temp_data = read_file(filename)
-    key = bytes(temp_data['owner_data']['key'], 'utf8')
-    return Fernet(key)
-
-   
-def encrypts(filename, plain_text_string):
-    """encrypts the unencrypted data"""
-    crypto = get_key(filename)
-    
-    string = crypto.encrypt(bytes(plain_text_string, 'utf8'))
-    return str(string, 'utf8')
-    
-def decrypts(filename, encrypted_string):
-    """decrypts the encrypted data"""
-    crypto = get_key(filename)
-    
-    decrypt_value = crypto.decrypt(bytes(encrypted_string, 'utf8'))
-    return str(decrypt_value, 'utf8')
-
+from my_manager import *
 
 def new_user(database):
     """Will be called if the file does not exist or it's empty"""
     printify('It seems you are a new user!')
+    
     while True:
         printify('remember to press q to quit\nPlease fill the following with your correct info\n')
         printify('Email: ')
-        email = input().lower()
+        email = input()
         if email == 'q':
             return
         
         printify('Chosen username: ')
-        username = input().lower()
+        username = input()
         if username == 'q':
             return
         
@@ -106,7 +48,6 @@ def new_user(database):
     
     password = hashed(password)
     key = str(Fernet.generate_key(), 'utf8')
-    
     the_json = {
         'owner_data':
             {'username':username,'password':password,'email':email,'key':key},
@@ -124,10 +65,12 @@ def start(filename):
         printify('\nWhat do you want to do now?')
         printify('1 for adding\n2 for changing\n3 for checking\n4 for deleting\nq for quiting')
         choice = None
+        
         while choice not in ('q', *REDIRECT.keys()):
             choice = input('Your choice: ').lower()
         if choice == 'q':
             break
+        
         clear(stop=False)
         REDIRECT.get(choice)(filename)
 
@@ -135,6 +78,7 @@ def adding(filename):
     """Adds the given info to the json file"""
     printify('Welcome you are currently adding a new website and password value\n')
     temp_data = read_file(filename)
+    
     printify(f'{list(temp_data["sites"].keys())} are the sites that already has passwords\n')
     printify('Please enter your chosen website name: ')
     site_name = input()
